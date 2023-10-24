@@ -15,9 +15,7 @@ ma = Marshmallow()
 def load_user(user_id):
     return User.query.get(user_id)
 
-@loginManager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -31,7 +29,7 @@ class User(db.Model, UserMixin):
     cars = db.relationship("Car", backref='seller', lazy=True)
     g_auth_verify = db.Column(db.Boolean, default=False)
 
-    def __init__(self, first_name, last_name, email, password):
+    def __init__(self, first_name, last_name, email, password, g_auth_verify=False):
         self.first_name = first_name.title()
         self.last_name = last_name.title()
         self.email = email.lower()

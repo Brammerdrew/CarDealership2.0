@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint 
+from flask import render_template, Blueprint, url_for
 
 
 site = Blueprint('site', __name__, template_folder='site_templates')

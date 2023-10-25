@@ -7,6 +7,7 @@ import uuid
 from flask_marshmallow import Marshmallow
 
 
+
 db = SQLAlchemy()
 loginManager = LoginManager()
 ma = Marshmallow()

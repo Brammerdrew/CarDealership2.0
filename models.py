@@ -56,6 +56,8 @@ class Car(db.Model):
     make = db.Column(db.String(100), nullable=False)
     model = db.Column(db.String(100), nullable=False)
     year = db.Column(db.Integer, nullable=False)
+    mileage = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Integer, nullable=False)
     color = db.Column(db.String(100), nullable=False)
     image_file = db.Column(db.String(20))
     date_listed = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)

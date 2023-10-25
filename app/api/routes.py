@@ -14,10 +14,12 @@ def create_car(current_user_token):
     model = request.json['model']
     year = request.json['year']
     color = request.json['color']
+    price = request.json['price']
+    mileage = request.json['mileage']
     image_file = request.json['image_file']
     seller_id = current_user_token.id
 
-    car = Car(make, model, year, color, image_file, seller_id=seller_id)
+    car = Car(make, model, year, color, image_file,price,mileage, seller_id=seller_id)
 
     db.session.add(car)
     db.session.commit()
@@ -68,7 +70,7 @@ def get_car(current_user_token, id):
     return jsonify(response)
 
 @api.route('/inventory', methods=['GET'])
-@token_required
+#@token_required
 def get_cars(current_user_token):
     owner = current_user_token.token
     cars = Car.query.filter_by(seller_id=owner).all()

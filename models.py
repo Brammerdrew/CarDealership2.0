@@ -19,7 +19,7 @@ def load_user(user_id):
 
 
 class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String, primary_key=True)
     first_name = db.Column(db.String(20), nullable = False)
     last_name = db.Column(db.String(50), nullable = False)  
     email = db.Column(db.String(120), unique=True, nullable = False)
@@ -33,6 +33,7 @@ class User(db.Model, UserMixin):
     def __init__(self, first_name, last_name, email, password, g_auth_verify=False):
         self.first_name = first_name.title()
         self.last_name = last_name.title()
+        self.id = self.set_id()
         self.email = email.lower()
         self.password = self.set_password(password)
         self.token = self.set_token(24)
@@ -52,7 +53,7 @@ class User(db.Model, UserMixin):
         return f"User('{self.first_name}' '{self.last_name}', '{self.email}', '{self.image_file}')"
     
 class Car(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String, primary_key=True)
     make = db.Column(db.String(100), nullable=False)
     model = db.Column(db.String(100), nullable=False)
     year = db.Column(db.Integer, nullable=False)
@@ -61,12 +62,15 @@ class Car(db.Model):
     color = db.Column(db.String(100), nullable=False)
     image_file = db.Column(db.String(20))
     date_listed = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    seller_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    seller_id = db.Column(db.String, db.ForeignKey('user.id'), nullable=False)
 
-    def __init__(self, make, model, year, color, image_file, seller_id):
+    def __init__(self, make, model, year, color, image_file, price, mileage,  seller_id):
         self.make = make
+        self.id = self.get_id()
         self.model = model
         self.year = year
+        self.price = price
+        self.mileage = mileage
         self.color = color
         self.image_file = image_file
         self.seller_id = seller_id

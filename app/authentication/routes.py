@@ -13,11 +13,13 @@ auth = Blueprint('auth', __name__, template_folder='auth_templates')
 def signup():
     form = SignUp()
     try:
-        if request.method == 'POST' and form.validate_on_submit():
+        if request.method == 'POST': 
+            #and form.validate_on_submit():
             first_name = form.first_name.data
             last_name = form.last_name.data
             email = form.email.data
             password = form.password.data
+            print(first_name, last_name, email, password)
             
             user = User(first_name, last_name, email, password, g_auth_verify=False)
             db.session.add(user)

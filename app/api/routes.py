@@ -27,41 +27,15 @@ def create_car(current_user_token):
     response = car_schema.dump(car)
     return jsonify(response)
 
-# def save_picture(form_picture):
-#     random_hex = secrets.token_hex(8)
-#     _, f_ext = os.path.splitext(form_picture.filename) 
-#     picture_fn = random_hex + f_ext
-#     picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn) 
-#     output_size = (125, 125)
-#     i = Image.open(form_picture)
-#     i.thumbnail(output_size)
-#     i.save(picture_path)
-#     return picture_fn
-
-# @api.route('/inventory', methods=['POST'])
-# @token_required
-# def post_car(current_user_token):
-#     form = PostCar()
-#     if form.validate_on_submit():
-#         if form.image_file.data:
-#             picture_file = save_picture(form.image_file.data)
-#             current_user.image_file = picture_file
-#         make = form.make.data
-#         model = form.model.data
-#         year = form.year.data
-#         color = form.color.data
-#         image_file = form.image_file.data
-#         seller_id = current_user_token.id
-#         car = Car(make, model, year, color, image_file, seller_id=seller_id)
-
-#         db.session.add(car)
-#         db.session.commit()
-
-#         response = car_schema.dump(car)
-#         return jsonify(response)
-    
-
 @api.route('/inventory', methods=['GET'])
+@token_required
+def get_cars(current_user_token):
+    owner = current_user_token.id
+    cars = Car.query.filter_by(seller_id=owner).all()
+    response = cars_schema.dump(cars)
+    return jsonify(response)    
+
+@api.route('/inventory/<id>', methods=['GET'])
 @token_required
 def get_car(current_user_token, id):
     current_user_token = current_user_token.token
@@ -69,13 +43,7 @@ def get_car(current_user_token, id):
     response = car_schema.dump(id)
     return jsonify(response)
 
-@api.route('/inventory', methods=['GET'])
-#@token_required
-def get_cars(current_user_token):
-    owner = current_user_token.token
-    cars = Car.query.filter_by(seller_id=owner).all()
-    response = cars_schema.dump(cars)
-    return jsonify(response)
+
 
 @api.route('/inventory/<id>', methods=['PUT', 'POST'])
 @token_required

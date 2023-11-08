@@ -16,10 +16,9 @@ def create_car(current_user_token):
     color = request.json['color']
     price = request.json['price']
     mileage = request.json['mileage']
-    image_file = request.json['image_file']
     seller_id = current_user_token.id
 
-    car = Car(make, model, year, color, image_file,price,mileage, seller_id=seller_id)
+    car = Car(make, model, year, color, price,mileage, seller_id=seller_id)
 
     db.session.add(car)
     db.session.commit()
@@ -54,7 +53,6 @@ def update_car(current_user_token, id):
     car.model = request.json['model']
     car.year = request.json['year']
     car.color = request.json['color']
-    car.image_file = request.json['image_file']
     car.seller_id = current_user_token.id
 
     db.session.commit()

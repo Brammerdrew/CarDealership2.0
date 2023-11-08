@@ -42,5 +42,4 @@ class PostCar(FlaskForm):
     model = StringField('Model', validators=[DataRequired(), Length(min=2, max=20)])
     year = StringField('Year', validators=[DataRequired(), Length(min=2, max=20)])
     color = StringField('Color', validators=[DataRequired(), Length(min=2, max=20)])
-    image_file = FileField('Add Car Image', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Post Car')

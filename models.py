@@ -23,7 +23,6 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(20), nullable = False)
     last_name = db.Column(db.String(50), nullable = False)  
     email = db.Column(db.String(120), unique=True, nullable = False)
-    image_file = db.Column(db.String(20), nullable = False, default='default.jpg')
     password = db.Column(db.String(1000), nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     token = db.Column(db.String, default = '', unique = True)
@@ -50,7 +49,7 @@ class User(db.Model, UserMixin):
         return self.pw_hash
 
     def __repr__(self):
-        return f"User('{self.first_name}' '{self.last_name}', '{self.email}', '{self.image_file}')"
+        return f"User('{self.first_name}' '{self.last_name}', '{self.email}')"
     
 class Car(db.Model):
     id = db.Column(db.String, primary_key=True)
@@ -60,11 +59,10 @@ class Car(db.Model):
     mileage = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)
     color = db.Column(db.String(100), nullable=False)
-    image_file = db.Column(db.String(20))
     date_listed = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     seller_id = db.Column(db.String, db.ForeignKey('user.id'), nullable=False)
 
-    def __init__(self, make, model, year, color, image_file, price, mileage,  seller_id):
+    def __init__(self, make, model, year, color, price, mileage,  seller_id):
         self.make = make
         self.id = self.get_id()
         self.model = model
@@ -72,7 +70,6 @@ class Car(db.Model):
         self.price = price
         self.mileage = mileage
         self.color = color
-        self.image_file = image_file
         self.seller_id = seller_id
         self.date_listed = datetime.utcnow()
     
@@ -81,11 +78,11 @@ class Car(db.Model):
     
 
     def __repr__(self):
-        return f"Car('{self.make}','{self.model}', '{self.year}','{self.color}','{self.image_file}','{self.date_listed}')"
+        return f"Car('{self.make}','{self.model}', '{self.year}','{self.color}','{self.date_listed}')"
     
 class CarSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'make', 'model', 'year', 'color', 'image_file', 'date_listed', 'seller_id')
+        fields = ('id', 'make', 'model', 'year', 'color', 'date_listed', 'seller_id')
 
 
 car_schema = CarSchema()

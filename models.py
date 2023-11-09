@@ -78,11 +78,11 @@ class Car(db.Model):
     
 
     def __repr__(self):
-        return f"Car('{self.make}','{self.model}', '{self.year}','{self.color}','{self.date_listed}')"
+        return f"Car('{self.make}','{self.model}', '{self.year}','{self.color}','{self.date_listed}', '{self.price}', '{self.mileage}')"
     
 class CarSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'make', 'model', 'year', 'color', 'date_listed', 'seller_id')
+        fields = ('id', 'make', 'model', 'year', 'color', 'mileage', 'price' 'date_listed', 'seller_id')
 
 
 car_schema = CarSchema()

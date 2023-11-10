@@ -53,6 +53,8 @@ def update_car(current_user_token, id):
     car.model = request.json['model']
     car.year = request.json['year']
     car.color = request.json['color']
+    car.price = request.json['price']
+    car.mileage = request.json['mileage']
     car.seller_id = current_user_token.id
 
     db.session.commit()
